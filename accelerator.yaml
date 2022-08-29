@@ -22,17 +22,15 @@ accelerator:
   - name: description
     inputType: text
     label: description
-    defaultValue: A New Acme World Product
+    defaultValue: A new tanzu java web application
   - name: groupId
     inputType: select
-    label: Acme Organization
+    label: Alfa Organization
     choices:
-    - text: "ecommerce"
-      value: com.acme.ecommerce
-    - text: "manufacturing"
-      value: com.acme.production
+    - text: "billing"
+      value: com.alfa.billing
     - text: "sales"
-      value: com.acme.sales
+      value: com.alfa.sales
     required: true
   - name: mavenArtifactVersion
     inputType: text
@@ -62,15 +60,10 @@ accelerator:
     inputType: text
     defaultValue: default
     label: Namespace to Deploy Workload
-    description: Generally this is the developer workspace e.g. cody-dev
+    description: Generally this is the developer workspace e.g. dev-env
     dependsOn:
       name: createWorkload
       value: true
-  - name: repositoryPrefix
-    inputType: text
-    label: Prefix for the container image repository
-    defaultValue: dev.local
-    required: true
 
 engine:
   merge:
@@ -127,3 +120,9 @@ engine:
         with: "#name"
       - text: alpha-description
         with: "#description"
+    - type: ReplaceText
+      regex:
+        pattern: "<java.version>.*<"
+        with: "'<java.version>' + #javaVersion + '<'"
+        
+
